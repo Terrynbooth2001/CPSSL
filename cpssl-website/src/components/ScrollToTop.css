@@ -1,0 +1,59 @@
+/* ─── Scroll To Top Button ─── */
+.scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+    color: var(--bg-deep);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 8000;
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.35s var(--ease-out),
+        transform 0.35s var(--ease-out),
+        box-shadow 0.3s;
+    will-change: transform, opacity;
+}
+
+.scroll-top--visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.scroll-top:hover {
+    box-shadow: 0 4px 20px rgba(200, 165, 90, 0.35);
+    transform: translateY(-3px);
+}
+
+.scroll-top:active {
+    transform: translateY(0);
+}
+
+.scroll-top svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--bg-deep);
+}
+
+@media (max-width: 600px) {
+    .scroll-top {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    .scroll-top svg {
+        width: 17px;
+        height: 17px;
+    }
+}

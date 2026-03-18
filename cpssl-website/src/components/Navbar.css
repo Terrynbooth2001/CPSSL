@@ -116,19 +116,21 @@
     width: 100%;
 }
 
-/* Nav CTA */
 .nav-cta {
-    padding: 0.55rem 1.4rem;
+    padding: 0.65rem 1.6rem;
     border: 1px solid var(--gold-dim);
     color: var(--gold);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     border-radius: var(--radius);
-    transition: all 0.3s var(--ease-smooth);
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
     text-decoration: none;
     background: transparent;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
 }
 
 .nav-cta:hover {
@@ -218,6 +220,7 @@
 .nav-overlay-cta:hover {
     background: var(--gold);
     color: var(--bg-deep);
+    box-shadow: 0 4px 20px rgba(200, 165, 90, 0.2);
 }
 
 /* Responsive */

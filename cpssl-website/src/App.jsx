@@ -1,11 +1,12 @@
 import { lazy, Suspense, memo } from 'react'
 import { LazyMotion, domAnimation } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Marquee from './components/Marquee'
+import ScrollToTop from './components/ScrollToTop'
 import './index.css'
 
-/* Lazy-load below-the-fold sections for faster initial paint */
 const Services = lazy(() => import('./components/Services'))
 const About = lazy(() => import('./components/About'))
 const Process = lazy(() => import('./components/Process'))
@@ -27,6 +28,8 @@ function App() {
                 <Contact />
                 <Footer />
             </Suspense>
+            <Analytics />
+            <ScrollToTop />
         </LazyMotion>
     )
 }
