@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPSSL — Collishaw Paraplanning & Support Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #080c16;
+    --bg2:      #0f1525;
+    --bg3:      #151d30;
+    --gold:     #c9a96e;
+    --gold-lt:  #e2c898;
+    --gold-dk:  #9d7d4a;
+    --text:     #e6dfd4;
+    --muted:    #7a8aaa;
+    --line:     rgba(201,169,110,0.18);
+    --white:    #f5f0e8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ─── CUSTOM CURSOR ─────────────────────────────── */
+  .cursor {
+    position: fixed; width: 10px; height: 10px;
+    background: var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.18s cubic-bezier(.25,.46,.45,.94),
+                width 0.4s, height 0.4s, opacity 0.4s;
+    opacity: 0.5;
+  }
+  body:hover .cursor, body:hover .cursor-ring { opacity: 1; }
+
+  /* ─── NAV ────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 4rem;
+    transition: background 0.5s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(8,12,22,0.92);
+    backdrop-filter: blur(14px);
+    padding: 1rem 4rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--gold-lt);
+    text-decoration: none;
+    display: flex; flex-direction: column; line-height: 1;
+  }
+  .nav-logo span {
+    font-size: 0.55rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.8rem; list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute;
+    bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s cubic-bezier(.25,.46,.45,.94);
+  }
+  .nav-links a:hover { color: var(--gold-lt); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    padding: 0.65rem 1.6rem;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    font-size: 0.68rem !important;
+    letter-spacing: 0.22em !important;
+    border-radius: 2px;
+    transition: background 0.3s, color 0.3s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--gold) !important; color: var(--bg) !important; }
+
+  /* ─── HERO ───────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10rem 4rem 8rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.2rem;
+    display: flex; align-items: center; gap: 1rem;
+    opacity: 0; animation: fadeUp 0.9s 0.3s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 5.5vw, 6rem);
+    font-weight: 300;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-lt);
+    display: block;
+  }
+
+  .hero-title .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: wordUp 0.8s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .hero-title .word:nth-child(1) { animation-delay: 0.5s; }
+  .hero-title .word:nth-child(2) { animation-delay: 0.65s; }
+  .hero-title .word:nth-child(3) { animation-delay: 0.8s; }
+  .hero-title .word:nth-child(4) { animation-delay: 0.95s; }
+  .hero-title .word:nth-child(5) { animation-delay: 1.1s; }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 440px;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp 0.9s 1.2s forwards;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1.4rem; align-items: center;
+    opacity: 0; animation: fadeUp 0.9s 1.4s forwards;
+  }
+
+  .btn-primary {
+    padding: 1rem 2.4rem;
+    background: var(--gold);
+    color: var(--bg);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.3s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+  .btn-ghost {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 0.6rem;
+    transition: color 0.3s;
+  }
+  .btn-ghost svg { transition: transform 0.3s; }
+  .btn-ghost:hover { color: var(--text); }
+  .btn-ghost:hover svg { transform: translateX(4px); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-img-wrap {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: heroImgIn 1.4s 0.6s cubic-bezier(.16,1,.3,1) forwards;
+  }
+
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--bg) 0%, transparent 35%),
+                linear-gradient(0deg, var(--bg) 0%, transparent 30%);
+    z-index: 1;
+  }
+
+  .hero-bg-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(20%) contrast(1.05);
+  }
+
+  .hero-name-badge {
+    position: absolute;
+    bottom: 4rem; left: -2rem;
+    z-index: 3;
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    padding: 1.2rem 1.8rem;
+    border-radius: 4px;
+    opacity: 0; animation: fadeUp 0.9s 1.6s forwards;
+    backdrop-filter: blur(8px);
+  }
+  .hero-name-badge .name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 500;
+    color: var(--white);
+  }
+  .hero-name-badge .role {
+    font-size: 0.62rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-top: 3px;
+  }
+
+  .hero-stat-row {
+    position: absolute;
+    bottom: 2.5rem; left: 4rem; right: auto;
+    z-index: 3;
+    display: flex; gap: 2.5rem;
+    opacity: 0; animation: fadeUp 0.9s 1.7s forwards;
+  }
+  .hero-stat { text-align: left; }
+  .hero-stat .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 300;
+    color: var(--gold-lt); line-height: 1;
+  }
+  .hero-stat .label {
+    font-size: 0.6rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column;
+    align-items: center; gap: 0.5rem;
+    font-size: 0.58rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--muted);
+    opacity: 0; animation: fadeUp 1s 2s forwards;
+    z-index: 5;
+  }
+  .scroll-hint .line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 2s infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ─── MARQUEE ────────────────────────────────────── */
+  .marquee-section {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 1.2rem 0;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+  .marquee-track {
+    display: flex; gap: 0;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    padding: 0 3rem;
+    display: flex; align-items: center; gap: 3rem;
+  }
+  .marquee-item .dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTION COMMONS ────────────────────────────── */
+  section { padding: 8rem 4rem; }
+
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.4rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before {
+    content: ''; display: block;
+    width: 28px; height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1.6rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold-lt); }
+
+  /* ─── REVEAL ANIMATIONS ─────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.85s cubic-bezier(.25,.46,.45,.94),
+                transform 0.85s cubic-bezier(.25,.46,.45,.94);
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.35s; }
+  .reveal-delay-4 { transition-delay: 0.5s; }
+
+  /* ─── SERVICES ───────────────────────────────────── */
+  #services {
+    background: var(--bg);
+    max-width: 1400px; margin: 0 auto;
+    padding: 8rem 4rem;
+  }
+
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+    align-items: end;
+  }
+
+  .services-intro {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 2.8rem 2.4rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+    cursor: default;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-dk), var(--gold));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.5s cubic-bezier(.25,.46,.45,.94);
+  }
+  .service-card:hover { background: var(--bg2); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; font-weight: 300;
+    color: var(--bg3);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    transition: color 0.4s;
+    user-select: none;
+  }
+  .service-card:hover .service-num { color: var(--line); }
+
+  .service-icon {
+    width: 42px; height: 42px;
+    margin-bottom: 1.4rem;
+    color: var(--gold);
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem; font-weight: 500;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 0.85rem;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ─── ABOUT ──────────────────────────────────────── */
+  #about {
+    background: var(--bg2);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .about-visual {
+    position: relative;
+    min-height: 680px;
+    overflow: hidden;
+  }
+
+  .about-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: grayscale(15%);
+  }
+
+  .about-visual::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 60%, var(--bg2) 100%),
+                linear-gradient(180deg, transparent 50%, rgba(8,12,22,0.4) 100%);
+  }
+
+  .about-gold-frame {
+    position: absolute;
+    top: 3rem; left: 3rem; right: -1.5rem; bottom: -1.5rem;
+    border: 1px solid var(--line);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .about-content {
+    padding: 6rem 5rem 6rem 4rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 300;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.45;
+    margin: 1.8rem 0 2.2rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  .about-body {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .about-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    margin-top: 2rem;
+  }
+  .about-tag {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--line);
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+  }
+
+  /* ─── PROCESS ────────────────────────────────────── */
+  #process {
+    background: var(--bg);
+    max-width: 1400px; margin: 0 auto;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4rem;
+    position: relative;
+  }
+  .process-grid::before {
+    content: '';
+    position: absolute;
+    top: 2.2rem; left: calc(12.5% + 1rem); right: calc(12.5% + 1rem);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dk), var(--gold-dk), transparent);
+  }
+
+  .process-step {
+    padding: 0 2rem 2rem;
+    text-align: center;
+  }
+  .process-num {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 2rem;
+    background: var(--bg);
+    position: relative; z-index: 1;
+    transition: background 0.3s, color 0.3s;
+  }
+  .process-step:hover .process-num {
+    background: var(--gold); color: var(--bg);
+  }
+  .process-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-weight: 500;
+    color: var(--white); margin-bottom: 0.7rem;
+  }
+  .process-desc {
+    font-size: 0.82rem; line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ─── WHY ────────────────────────────────────────── */
+  #why {
+    background: var(--bg2);
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 0;
+    padding: 0;
+  }
+
+  .why-left {
+    padding: 7rem 4rem;
+    border-right: 1px solid var(--line);
+  }
+  .why-right {
+    padding: 7rem 4rem;
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  .why-list { margin-top: 3rem; display: flex; flex-direction: column; gap: 0; }
+  .why-item {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding-left 0.3s;
+  }
+  .why-item:first-child { border-top: 1px solid var(--line); }
+  .why-item:hover { padding-left: 0.5rem; }
+  .why-item .icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    color: var(--gold); margin-top: 2px;
+  }
+  .why-item-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 500;
+    color: var(--white); margin-bottom: 0.4rem;
+  }
+  .why-item-desc {
+    font-size: 0.82rem; line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .why-right-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300; line-height: 1.2;
+    color: var(--white); margin-bottom: 2rem;
+  }
+  .why-right-title em { font-style: italic; color: var(--gold-lt); }
+
+  .why-stat-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; flex: 1;
+    border: 1px solid var(--line);
+  }
+  .why-stat-box {
+    padding: 2.2rem 1.8rem;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .why-stat-box:nth-child(even) { border-right: none; }
+  .why-stat-box:nth-child(3), .why-stat-box:nth-child(4) { border-bottom: none; }
+  .why-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 300;
+    color: var(--gold-lt); line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .why-stat-label {
+    font-size: 0.68rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* ─── CONTACT ────────────────────────────────────── */
+  #contact {
+    background: var(--bg);
+    text-align: center;
+    padding: 9rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #contact::before {
+    content: 'CPSSL';
+    position: absolute;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22vw; font-weight: 300;
+    color: rgba(201,169,110,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 0.1em;
+  }
+
+  .contact-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 1.6rem;
+  }
+  .contact-title em { font-style: italic; color: var(--gold-lt); }
+
+  .contact-sub {
+    font-size: 0.95rem; line-height: 1.8;
+    color: var(--muted); margin-bottom: 3rem;
+  }
+
+  .contact-links {
+    display: flex; justify-content: center;
+    gap: 1.2rem; flex-wrap: wrap;
+    margin-bottom: 4rem;
+  }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.78rem; letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted); text-decoration: none;
+    border: 1px solid var(--line);
+    padding: 0.9rem 1.8rem; border-radius: 2px;
+    transition: color 0.3s, border-color 0.3s, background 0.3s;
+  }
+  .contact-link:hover { color: var(--gold); border-color: var(--gold); background: rgba(201,169,110,0.05); }
+  .contact-link svg { width: 16px; height: 16px; }
+
+  /* ─── FOOTER ─────────────────────────────────────── */
+  footer {
+    background: var(--bg2);
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 500;
+    color: var(--gold-lt); letter-spacing: 0.06em;
+  }
+  .footer-reg {
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .footer-copy {
+    font-size: 0.68rem; color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── NOISE OVERLAY ──────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9000;
+    opacity: 0.5;
+  }
+
+  /* ─── ANIMATIONS ─────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes wordUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @keyframes heroImgIn {
+    from { opacity: 0; transform: scale(1.06); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ─── RESPONSIVE ─────────────────────────────────── */
+  @media (max-width: 1024px) {
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    nav { padding: 1.4rem 2rem; }
+    nav.scrolled { padding: 0.9rem 2rem; }
+    .services-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    #about { grid-template-columns: 1fr; }
+    .about-visual { min-height: 400px; }
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .process-grid::before { display: none; }
+    #why { grid-template-columns: 1fr; }
+    .why-left { border-right: none; border-bottom: 1px solid var(--line); }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 5rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Nav -->
+<nav id="nav">
+  <a href="#" class="nav-logo">CPSSL<span>Collishaw Paraplanning & Support Services</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Paraplanning & Support Services</div>
+    <h1 class="hero-title">
+      <span class="word">Expert&nbsp;</span><span class="word">Paraplanning&nbsp;</span><br>
+      <em><span class="word">Built&nbsp;</span><span class="word">Around&nbsp;</span><span class="word">You</span></em>
+    </h1>
+    <p class="hero-desc">Specialist paraplanning and back-office support for financial advisers and wealth managers across the UK. Precise, reliable and fully tailored to your practice.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Work with us</a>
+      <a href="#services" class="btn-ghost">
+        Our services
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 6h16M11 1l6 5-6 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <div class="num">IFA</div>
+        <div class="label">Focused</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">FCA</div>
+        <div class="label">Compliant</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">100%</div>
+        <div class="label">Dedicated</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img class="hero-bg-img"
+        src="https://media.licdn.com/dms/image/v2/D4E03AQFUeIFMTETCAg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1718307406501?e=1775692800&v=beta&t=YDXK3aGWmsYn0JeKmM9QXsZKWf9_3j-KLOrxNMoZ984"
+        alt="Tina Collishaw — Director, CPSSL">
+    </div>
+    <div class="hero-name-badge">
+      <div class="name">Tina Collishaw</div>
+      <div class="role">Director & Lead Paraplanners</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-section">
+  <div class="marquee-track" aria-hidden="true">
+    <!-- Doubled for infinite scroll -->
+    <div class="marquee-item"><span class="dot"></span> Suitability Reports <span class="dot"></span> Portfolio Analysis <span class="dot"></span> Research &amp; Recommendations <span class="dot"></span> Compliance Support <span class="dot"></span> Cash Flow Modelling <span class="dot"></span> Pension Transfer Reports <span class="dot"></span> Investment Reviews <span class="dot"></span> Protection Analysis <span class="dot"></span> Mortgage Support <span class="dot"></span> Back-Office Administration</div>
+    <div class="marquee-item"><span class="dot"></span> Suitability Reports <span class="dot"></span> Portfolio Analysis <span class="dot"></span> Research &amp; Recommendations <span class="dot"></span> Compliance Support <span class="dot"></span> Cash Flow Modelling <span class="dot"></span> Pension Transfer Reports <span class="dot"></span> Investment Reviews <span class="dot"></span> Protection Analysis <span class="dot"></span> Mortgage Support <span class="dot"></span> Back-Office Administration</div>
+  </div>
+</div>
+
+<!-- Services -->
+<section id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-label reveal">What we do</div>
+      <h2 class="section-title reveal reveal-delay-1">
+        Comprehensive <em>Paraplanning</em><br>Support
+      </h2>
+    </div>
+    <p class="services-intro reveal reveal-delay-2">
+      From suitability letters to complex pension analysis, CPSSL delivers the technical rigour your clients deserve — freeing you to focus on advice, relationships and growth. Every piece of work is thorough, on time and built to your house style.
+    </p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <svg class="service-icon" viewBox="0 0 42 42" fill="none">
+        <rect x="6" y="4" width="26" height="34" rx="2" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M13 14h16M13 20h16M13 26h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="service-name">Suitability Reports</div>
+      <p class="service-desc">Clearly written, FCA-compliant suitability letters and reports that precisely capture your advice rationale and protect both adviser and client.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">02</div>
+      <svg class="service-icon" viewBox="0 0 42 42" fill="none">
+        <circle cx="21" cy="21" r="14" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M21 10v11l6 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="service-name">Research & Analysis</div>
+      <p class="service-desc">In-depth product research, fund analysis and market comparisons to underpin your recommendations with robust, evidenced reasoning.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">03</div>
+      <svg class="service-icon" viewBox="0 0 42 42" fill="none">
+        <path d="M8 32 L16 20 L24 26 L34 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8 36h26" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="service-name">Cash Flow Modelling</div>
+      <p class="service-desc">Lifetime cash flow illustrations and scenario planning to demonstrate outcomes, support financial plans and reinforce the value of your advice.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">04</div>
+      <svg class="service-icon" viewBox="0 0 42 42" fill="none">
+        <path d="M21 8c-7.18 0-13 5.82-13 13s5.82 13 13 13 13-5.82 13-13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M28 8l6 6-6 6M34 14H24" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="service-name">Pension Transfer Reports</div>
+      <p class="service-desc">DB and QROPS transfer analysis and reports prepared with meticulous care — meeting the high compliance standards required in this critical advice area.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">05</div>
+      <svg class="service-icon" viewBox="0 0 42 42" fill="none">
+        <path d="M10 32V20M18 32V14M26 32V22M34 32V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="service-name">Investment Reviews</div>
+      <p class="service-desc">Structured portfolio review reports, rebalancing analysis and performance summaries that keep client conversations informed and focused.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">06</div>
+      <svg class="service-icon" viewBox="0 0 42 42" fill="none">
+        <rect x="7" y="12" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M7 17h28" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M14 26h4M22 26h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="service-name">Back-Office Support</div>
+      <p class="service-desc">Administrative support including client onboarding, documentation management and general back-office tasks to keep your practice running smoothly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-gold-frame"></div>
+    <img
+      src="https://media.licdn.com/dms/image/v2/D4E03AQFUeIFMTETCAg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1718307406501?e=1775692800&v=beta&t=YDXK3aGWmsYn0JeKmM9QXsZKWf9_3j-KLOrxNMoZ984"
+      alt="Tina Collishaw — Director, CPSSL">
+  </div>
+  <div class="about-content">
+    <div class="section-label reveal">About</div>
+    <h2 class="section-title reveal reveal-delay-1">Meet <em>Tina Collishaw</em></h2>
+    <blockquote class="about-quote reveal reveal-delay-2">
+      "Exceptional paraplanning isn't just about compliance — it's about crafting advice that truly changes lives."
+    </blockquote>
+    <p class="about-body reveal reveal-delay-3">
+      Tina Collishaw is the founder and director of CPSSL, bringing years of hands-on experience in financial services paraplanning and adviser support. Based in Nottingham and serving clients across the UK, Tina established CPSSL to provide financial advisers with a genuinely personal, high-quality outsourced paraplanning service.
+    </p>
+    <p class="about-body reveal reveal-delay-3" style="margin-top:-1rem;">
+      Her meticulous approach, deep technical knowledge and commitment to getting it right first time have made CPSSL a trusted partner for IFAs who demand the best in back-office support — without the overheads of an in-house team.
+    </p>
+    <div class="about-tags reveal reveal-delay-4">
+      <span class="about-tag">Qualified Paraplanners</span>
+      <span class="about-tag">FCA Aware</span>
+      <span class="about-tag">Nottingham HQ</span>
+      <span class="about-tag">Nationwide Coverage</span>
+      <span class="about-tag">IFA Specialist</span>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="process">
+  <div style="text-align:center; max-width:600px; margin:0 auto 1rem;">
+    <div class="section-label reveal" style="justify-content:center;">
+      <div style="width:28px;height:1px;background:var(--gold)"></div>
+      How it works
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Simple, <em>Streamlined</em><br>Collaboration</h2>
+    <p class="reveal reveal-delay-2" style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-top:.5rem;">Getting started is easy. Our process is designed to slot seamlessly into your existing workflow with minimal disruption.</p>
+  </div>
+  <div class="process-grid">
+    <div class="process-step reveal">
+      <div class="process-num">1</div>
+      <div class="process-title">Initial Consultation</div>
+      <p class="process-desc">We discuss your practice, your clients and your preferred working style to ensure CPSSL fits your needs perfectly.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="process-num">2</div>
+      <div class="process-title">Scoping the Work</div>
+      <p class="process-desc">You share the client brief and relevant documents. We agree timescales, format and any practice-specific requirements upfront.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="process-num">3</div>
+      <div class="process-title">Research & Drafting</div>
+      <p class="process-desc">We conduct thorough research and produce draft reports, analysis or support materials in your house style or our own clean template.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="process-num">4</div>
+      <div class="process-title">Review & Deliver</div>
+      <p class="process-desc">You review and provide feedback if needed. Final documents are delivered on time, compliant and ready to present to your client.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Why -->
+<section id="why">
+  <div class="why-left">
+    <div class="section-label reveal">Why CPSSL</div>
+    <h2 class="section-title reveal reveal-delay-1">The Difference <em>Expertise</em> Makes</h2>
+    <div class="why-list">
+      <div class="why-item reveal reveal-delay-1">
+        <svg class="icon" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="13" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M12 18l4 4 8-8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="why-item-title">Dedicated, Personal Service</div>
+          <p class="why-item-desc">No account managers or tiered support queues. You work directly with Tina — ensuring consistency, accountability and a genuine understanding of your practice.</p>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-delay-2">
+        <svg class="icon" viewBox="0 0 36 36" fill="none">
+          <path d="M18 6l3.09 6.26L28 13.27l-5 4.87 1.18 6.86L18 22l-6.18 3.24L13 18.14 8 13.27l6.91-1.01L18 6z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <div class="why-item-title">Technical Excellence</div>
+          <p class="why-item-desc">Reports are thorough, evidence-based and written to a high professional standard — giving both you and your clients complete confidence in the advice.</p>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-delay-3">
+        <svg class="icon" viewBox="0 0 36 36" fill="none">
+          <rect x="6" y="10" width="24" height="18" rx="2" stroke="currentColor" stroke-width="1.3"/>
+          <path d="M12 10V8a6 6 0 0 1 12 0v2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <circle cx="18" cy="19" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+        </svg>
+        <div>
+          <div class="why-item-title">Confidentiality Assured</div>
+          <p class="why-item-desc">Client data is handled with the highest standards of confidentiality and in full compliance with data protection obligations. Your clients' information is always safe.</p>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-delay-4">
+        <svg class="icon" viewBox="0 0 36 36" fill="none">
+          <path d="M8 28V16a10 10 0 0 1 20 0v12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M4 28h28" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <div>
+          <div class="why-item-title">Flexible Capacity</div>
+          <p class="why-item-desc">Scale up or down as your workload demands — no contracts, no minimum volumes. Whether you have one case or a surge of reviews, CPSSL is there.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="why-right">
+    <h3 class="why-right-title reveal">Quality paraplanning<br><em>is an investment,<br>not a cost.</em></h3>
+    <div class="why-stat-grid reveal reveal-delay-2">
+      <div class="why-stat-box">
+        <div class="why-stat-num">100%</div>
+        <div class="why-stat-label">UK-based service</div>
+      </div>
+      <div class="why-stat-box">
+        <div class="why-stat-num">FCA</div>
+        <div class="why-stat-label">Regulatory awareness</div>
+      </div>
+      <div class="why-stat-box">
+        <div class="why-stat-num">Fast</div>
+        <div class="why-stat-label">Turnaround times</div>
+      </div>
+      <div class="why-stat-box">
+        <div class="why-stat-num">Clear</div>
+        <div class="why-stat-label">Transparent pricing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label reveal" style="justify-content:center;">
+      <div style="width:28px;height:1px;background:var(--gold)"></div>
+      Get in touch
+    </div>
+    <h2 class="contact-title reveal reveal-delay-1">
+      Ready to <em>elevate</em><br>your practice?
+    </h2>
+    <p class="contact-sub reveal reveal-delay-2">
+      Whether you're an IFA looking for reliable paraplanning support or a practice exploring outsourcing for the first time, Tina would love to hear from you. Let's talk about how CPSSL can help.
+    </p>
+    <div class="contact-links reveal reveal-delay-3">
+      <a href="mailto:hello@cpssl.co.uk" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="M2 7l10 7 10-7" stroke-linecap="round"/>
+        </svg>
+        Email Tina
+      </a>
+      <a href="tel:+44" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+        </svg>
+        Call us
+      </a>
+      <a href="https://www.linkedin.com/in/tina-collishaw" target="_blank" rel="noopener" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="2" width="20" height="20" rx="4"/>
+          <path d="M7 10v7M7 7v.5M12 17v-4c0-1.7 2.5-1.7 2.5 0v4M14.5 10v1.5" stroke-linecap="round"/>
+        </svg>
+        LinkedIn
+      </a>
+    </div>
+    <p class="reveal reveal-delay-4" style="font-size:0.7rem;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;">
+      Nottingham, England &nbsp;·&nbsp; Serving advisers nationwide
+    </p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>
+    <div class="footer-brand">CPSSL</div>
+    <div class="footer-reg" style="margin-top:4px;">Company No. 15509867 &nbsp;·&nbsp; Registered in England & Wales</div>
+  </div>
+  <div class="footer-copy">© 2024 Collishaw Paraplanning & Support Services Limited. All rights reserved.</div>
+</footer>
+
+<script>
+  // ── CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+    ring.style.left   = rx + 'px';
+    ring.style.top    = ry + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+
+  document.querySelectorAll('a, button, .service-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '16px'; cursor.style.height = '16px';
+      ring.style.width = '54px'; ring.style.height = '54px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px'; cursor.style.height = '10px';
+      ring.style.width = '36px'; ring.style.height = '36px';
+    });
+  });
+
+  // ── NAV SCROLL
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── REVEAL ON SCROLL
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => io.observe(r));
+
+  // ── SMOOTH ANCHOR
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>

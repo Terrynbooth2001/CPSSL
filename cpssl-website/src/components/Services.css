@@ -1,0 +1,151 @@
+/* ══════════════════════════════════════════════════
+   Services v2.1 — Polished cards, GPU transitions
+   ══════════════════════════════════════════════════ */
+
+.services {
+    background: var(--bg-deep);
+    padding: 7rem 3.5rem;
+}
+
+.services-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4.5rem;
+    align-items: end;
+}
+
+.services-intro {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+}
+
+.service-card {
+    background: var(--bg-primary);
+    padding: 2.5rem 2.2rem;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    border: 1px solid transparent;
+    transition: background 0.35s, border-color 0.35s;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-dim));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s var(--ease-smooth);
+    will-change: transform;
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at top right, var(--gold-glow) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.35s;
+}
+
+.service-card:hover {
+    background: var(--bg-elevated);
+    border-color: var(--border);
+}
+
+.service-card:hover::before {
+    transform: scaleX(1);
+}
+
+.service-card:hover::after {
+    opacity: 1;
+}
+
+.service-num {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 300;
+    color: rgba(200, 165, 90, 0.06);
+    line-height: 1;
+    margin-bottom: 1.2rem;
+    user-select: none;
+    transition: color 0.35s;
+}
+
+.service-card:hover .service-num {
+    color: rgba(200, 165, 90, 0.12);
+}
+
+.service-icon {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 1.2rem;
+    color: var(--gold);
+    opacity: 0.8;
+    transition: opacity 0.25s;
+}
+
+.service-card:hover .service-icon {
+    opacity: 1;
+}
+
+.service-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-hero);
+    margin-bottom: 0.7rem;
+    line-height: 1.2;
+}
+
+.service-desc {
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .services {
+        padding: 5rem 2rem;
+    }
+
+    .services-header {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .services {
+        padding: 4rem 1.25rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}

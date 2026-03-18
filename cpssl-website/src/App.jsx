@@ -1,0 +1,34 @@
+import { lazy, Suspense, memo } from 'react'
+import { LazyMotion, domAnimation } from 'framer-motion'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import Marquee from './components/Marquee'
+import './index.css'
+
+/* Lazy-load below-the-fold sections for faster initial paint */
+const Services = lazy(() => import('./components/Services'))
+const About = lazy(() => import('./components/About'))
+const Process = lazy(() => import('./components/Process'))
+const WhyCPSSL = lazy(() => import('./components/WhyCPSSL'))
+const Contact = lazy(() => import('./components/Contact'))
+const Footer = lazy(() => import('./components/Footer'))
+
+function App() {
+    return (
+        <LazyMotion features={domAnimation} strict>
+            <Navbar />
+            <Hero />
+            <Marquee />
+            <Suspense fallback={null}>
+                <Services />
+                <About />
+                <Process />
+                <WhyCPSSL />
+                <Contact />
+                <Footer />
+            </Suspense>
+        </LazyMotion>
+    )
+}
+
+export default memo(App)

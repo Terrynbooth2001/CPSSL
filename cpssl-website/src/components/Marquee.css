@@ -1,0 +1,51 @@
+/* ══════════════════════════════════════════════════
+   Marquee v2.1 — GPU-optimized scroll
+   ══════════════════════════════════════════════════ */
+
+.marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    overflow: hidden;
+    background: var(--bg-primary);
+    position: relative;
+}
+
+.marquee-track {
+    display: flex;
+    animation: marqueeScroll 40s linear infinite;
+    width: max-content;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.marquee-item {
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-weight: 400;
+}
+
+.marquee-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    flex-shrink: 0;
+}
+
+@keyframes marqueeScroll {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}

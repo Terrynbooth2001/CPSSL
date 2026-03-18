@@ -1,0 +1,184 @@
+/* ══════════════════════════════════════════════════
+   About v2 — Typographic, no photo
+   ══════════════════════════════════════════════════ */
+
+.about {
+    background: var(--bg-primary);
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Left — Decorative panel */
+.about-deco {
+    position: relative;
+    background: var(--bg-elevated);
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    min-height: 550px;
+}
+
+/* Big watermark initial */
+.about-deco-letter {
+    font-family: var(--font-display);
+    font-size: clamp(14rem, 20vw, 22rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(200, 165, 90, 0.04);
+    line-height: 0.85;
+    user-select: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Geometric decorations */
+.about-deco-ring {
+    position: absolute;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+}
+
+.about-deco-ring--1 {
+    width: 320px;
+    height: 320px;
+    top: 15%;
+    left: 15%;
+}
+
+.about-deco-ring--2 {
+    width: 200px;
+    height: 200px;
+    bottom: 20%;
+    right: 15%;
+    border-color: rgba(200, 165, 90, 0.08);
+}
+
+.about-deco-bar {
+    position: absolute;
+    width: 1px;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+}
+
+.about-deco-bar--1 {
+    left: 25%;
+    top: 8%;
+}
+
+.about-deco-bar--2 {
+    right: 30%;
+    bottom: 5%;
+}
+
+/* Centered quote block */
+.about-deco-quote {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 360px;
+}
+
+.about-deco-quote blockquote {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-hero);
+    line-height: 1.5;
+    padding: 0;
+    margin-bottom: 1.2rem;
+}
+
+.about-deco-quote cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+}
+
+.about-deco-quote cite span {
+    display: block;
+    color: var(--text-dim);
+    margin-top: 2px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    font-size: 0.58rem;
+}
+
+/* Right — Content */
+.about-content {
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-body {
+    font-size: 0.9rem;
+    line-height: 1.95;
+    color: var(--text-secondary);
+    margin-bottom: 1.2rem;
+}
+
+.about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.about-tag {
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius);
+    transition: border-color 0.3s, background 0.3s;
+    font-weight: 400;
+}
+
+.about-tag:hover {
+    border-color: var(--gold-dim);
+    background: var(--gold-glow);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .about {
+        grid-template-columns: 1fr;
+    }
+
+    .about-deco {
+        min-height: 350px;
+    }
+
+    .about-content {
+        padding: 4rem 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .about-deco {
+        min-height: 280px;
+        padding: 3rem 1.25rem;
+    }
+
+    .about-content {
+        padding: 3rem 1.25rem;
+    }
+}
