@@ -1,184 +1,178 @@
 /* ══════════════════════════════════════════════════
-   About v2 — Typographic, no photo
+   About v3 — Immersive, Editorial, Asymmetrical
    ══════════════════════════════════════════════════ */
 
 .about {
-    background: var(--bg-primary);
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    position: relative;
+    background: var(--bg-deep);
+    padding: 10rem 3.5rem;
     overflow: hidden;
     border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
 }
 
-/* Left — Decorative panel */
-.about-deco {
-    position: relative;
-    background: var(--bg-elevated);
-    padding: 5rem 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    min-height: 550px;
-}
-
-/* Big watermark initial */
-.about-deco-letter {
-    font-family: var(--font-display);
-    font-size: clamp(14rem, 20vw, 22rem);
-    font-weight: 300;
-    font-style: italic;
-    color: rgba(200, 165, 90, 0.04);
-    line-height: 0.85;
-    user-select: none;
+/* Big background typography */
+.about-watermark {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Geometric decorations */
-.about-deco-ring {
-    position: absolute;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-}
-
-.about-deco-ring--1 {
-    width: 320px;
-    height: 320px;
     top: 15%;
-    left: 15%;
-}
-
-.about-deco-ring--2 {
-    width: 200px;
-    height: 200px;
-    bottom: 20%;
-    right: 15%;
-    border-color: rgba(200, 165, 90, 0.08);
-}
-
-.about-deco-bar {
-    position: absolute;
-    width: 1px;
-    height: 120px;
-    background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
-}
-
-.about-deco-bar--1 {
-    left: 25%;
-    top: 8%;
-}
-
-.about-deco-bar--2 {
-    right: 30%;
-    bottom: 5%;
-}
-
-/* Centered quote block */
-.about-deco-quote {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    max-width: 360px;
-}
-
-.about-deco-quote blockquote {
+    left: -5%;
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: clamp(10rem, 25vw, 30rem);
     font-weight: 300;
-    font-style: italic;
-    color: var(--text-hero);
-    line-height: 1.5;
-    padding: 0;
-    margin-bottom: 1.2rem;
+    line-height: 0.8;
+    color: rgba(200, 165, 90, 0.02);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
 }
 
-.about-deco-quote cite {
-    display: block;
-    font-style: normal;
+.about-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* The massive quote block */
+.about-quote-block {
+    max-width: 900px;
+    margin-bottom: 8rem;
+}
+
+.about-quote-block blockquote {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--text-hero);
+    letter-spacing: -0.01em;
+    margin-bottom: 2rem;
+}
+
+.about-quote-block blockquote em {
+    font-style: italic;
+    color: var(--gold-bright);
+}
+
+.about-quote-block cite {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
     font-family: var(--font-body);
-    font-size: 0.65rem;
-    letter-spacing: 0.22em;
+    font-style: normal;
+}
+
+.about-quote-line {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+}
+
+.about-author-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold);
-    font-weight: 500;
 }
 
-.about-deco-quote cite span {
+.about-author-role {
     display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
     color: var(--text-dim);
-    margin-top: 2px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    font-size: 0.58rem;
+    margin-top: 4px;
 }
 
-/* Right — Content */
-.about-content {
-    padding: 5rem 4rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+/* Details grid */
+.about-details {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    margin-left: 20%;
+    padding-top: 5rem;
+    border-top: 1px solid var(--border);
+    position: relative;
 }
 
-.about-body {
-    font-size: 0.9rem;
-    line-height: 1.95;
+.about-details::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: var(--gold);
+}
+
+.about-body p {
+    font-size: 1.1rem;
+    line-height: 1.85;
     color: var(--text-secondary);
-    margin-bottom: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
 }
 
 .about-tags {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 2rem;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.about-tag {
-    font-size: 0.58rem;
-    letter-spacing: 0.2em;
+.about-tag-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid var(--border);
-    padding: 0.4rem 0.85rem;
-    border-radius: var(--radius);
-    transition: border-color 0.3s, background 0.3s;
-    font-weight: 400;
+    color: var(--text-primary);
+    opacity: 0.8;
 }
 
-.about-tag:hover {
-    border-color: var(--gold-dim);
-    background: var(--gold-glow);
+.about-tag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .about {
+    .about-details {
+        margin-left: 0;
         grid-template-columns: 1fr;
+        gap: 4rem;
     }
 
-    .about-deco {
-        min-height: 350px;
-    }
-
-    .about-content {
-        padding: 4rem 2rem;
+    .about-tags {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 2rem;
     }
 }
 
 @media (max-width: 600px) {
-    .about-deco {
-        min-height: 280px;
-        padding: 3rem 1.25rem;
+    .about {
+        padding: 6rem 1.25rem;
     }
 
-    .about-content {
-        padding: 3rem 1.25rem;
+    .about-quote-block {
+        margin-bottom: 5rem;
+    }
+
+    .about-quote-block cite {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .about-tags {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .about-details {
+        padding-top: 3rem;
     }
 }

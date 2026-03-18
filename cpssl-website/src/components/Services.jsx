@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+import { memo } from 'react'
 import { m } from 'framer-motion'
 import './Services.css'
 
@@ -20,7 +20,7 @@ const services = [
     },
     {
         num: '04', name: 'Pension Transfer Reports',
-        desc: 'DB and QROPS transfer analysis and reports prepared with meticulous care — meeting the high compliance standards required in this critical advice area.',
+        desc: 'DB and QROPS transfer analysis and reports prepared with meticulous care. We meet the high compliance standards required in this critical advice area.',
         icon: <svg className="service-icon" viewBox="0 0 38 38" fill="none"><path d="M19 7c-6.63 0-12 5.37-12 12s5.37 12 12 12 12-5.37 12-12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /><path d="M26 7l5 5-5 5M31 12H22" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>,
     },
     {
@@ -35,37 +35,46 @@ const services = [
     },
 ]
 
-const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.07, duration: 0.55, ease: [.25, .46, .45, .94] } }) }
-const sectionFade = { opacity: 0, y: 16 }
-const sectionShow = { opacity: 1, y: 0 }
-const vp = { once: true, amount: 0.15 }
+const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [.16, 1, .3, 1] } } }
+const vp = { once: true, amount: 0.2 }
 
 function Services() {
     return (
         <section className="services" id="services">
             <div className="services-inner">
+
                 <div className="services-header">
-                    <div>
-                        <m.div className="section-label" initial={sectionFade} whileInView={sectionShow} viewport={vp} transition={{ duration: 0.55 }}>What we do</m.div>
-                        <m.h2 className="section-heading" initial={sectionFade} whileInView={sectionShow} viewport={vp} transition={{ duration: 0.55, delay: 0.06 }}>
-                            Comprehensive <em>Paraplanning</em><br />Support
-                        </m.h2>
-                    </div>
-                    <m.p className="services-intro" initial={sectionFade} whileInView={sectionShow} viewport={vp} transition={{ duration: 0.55, delay: 0.12 }}>
-                        From suitability letters to complex pension analysis, CPSSL delivers the technical rigour your clients deserve — freeing you to focus on advice, relationships and growth.
+                    <m.div className="section-label" initial="hidden" whileInView="visible" viewport={vp} variants={fadeUp}>Our Expertise</m.div>
+                    <m.h2 className="section-heading" initial="hidden" whileInView="visible" viewport={vp} variants={fadeUp} transition={{ delay: 0.1 }}>
+                        Comprehensive<br /><em>Paraplanning</em>
+                    </m.h2>
+                    <m.p className="services-intro" initial="hidden" whileInView="visible" viewport={vp} variants={fadeUp} transition={{ delay: 0.2 }}>
+                        From suitability letters to complex pension analysis, CPSSL delivers the technical rigour your clients deserve. This frees you up to focus on advice, relationships, and growth.
                     </m.p>
                 </div>
 
-                <div className="services-grid">
+                <div className="services-list">
                     {services.map((s, i) => (
-                        <m.div className="service-card" key={s.num} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={vp}>
+                        <m.div
+                            className="service-item"
+                            key={s.num}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={vp}
+                            variants={fadeUp}
+                        >
                             <div className="service-num">{s.num}</div>
-                            {s.icon}
-                            <div className="service-name">{s.name}</div>
-                            <p className="service-desc">{s.desc}</p>
+                            <div className="service-content">
+                                <div className="service-title-wrap">
+                                    <h3 className="service-name">{s.name}</h3>
+                                    {s.icon}
+                                </div>
+                                <p className="service-desc">{s.desc}</p>
+                            </div>
                         </m.div>
                     ))}
                 </div>
+
             </div>
         </section>
     )

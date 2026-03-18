@@ -1,165 +1,187 @@
 /* ══════════════════════════════════════════════════
-   Why CPSSL v2
+   Why CPSSL v3 — Editorial Box, High Contrast
    ══════════════════════════════════════════════════ */
 
 .why {
     background: var(--bg-primary);
+    padding: 8rem 3.5rem;
+}
+
+.why-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ─── Top Stats Grid (Massive typography) ─── */
+.why-stats {
     display: grid;
-    grid-template-columns: 55% 45%;
-    gap: 0;
-    padding: 0;
-    border-top: 1px solid var(--border);
-}
-
-.why-left {
-    padding: 6rem 4rem;
-    border-right: 1px solid var(--border);
-}
-
-.why-right {
-    padding: 6rem 3.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.why-list {
-    margin-top: 2.5rem;
-    display: flex;
-    flex-direction: column;
-}
-
-.why-item {
-    display: flex;
-    gap: 1.4rem;
-    align-items: flex-start;
-    padding: 1.6rem 0;
-    border-bottom: 1px solid var(--border);
-    transition: padding-left 0.35s var(--ease-out);
-}
-
-.why-item:first-child {
-    border-top: 1px solid var(--border);
-}
-
-.why-item:hover {
-    padding-left: 0.6rem;
-}
-
-.why-item .icon {
-    width: 32px;
-    height: 32px;
-    flex-shrink: 0;
-    color: var(--gold);
-    margin-top: 2px;
-    opacity: 0.8;
-}
-
-.why-item:hover .icon {
-    opacity: 1;
-}
-
-.why-item-title {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: var(--text-hero);
-    margin-bottom: 0.35rem;
-}
-
-.why-item-desc {
-    font-size: 0.8rem;
-    line-height: 1.75;
-    color: var(--text-secondary);
-}
-
-/* Right side */
-.why-right-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 2.8vw, 2.6rem);
-    font-weight: 300;
-    line-height: 1.25;
-    color: var(--text-hero);
-    margin-bottom: 2.5rem;
-}
-
-.why-right-title em {
-    font-style: italic;
-    color: var(--gold-bright);
-}
-
-.why-stat-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    flex: 1;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
     border: 1px solid var(--border);
+    margin-bottom: 8rem;
 }
 
 .why-stat-box {
-    padding: 2rem 1.6rem;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.3s;
+    background: var(--bg-deep);
+    padding: 4rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: background 0.4s var(--ease-out);
 }
 
 .why-stat-box:hover {
-    background: var(--gold-glow);
-}
-
-.why-stat-box:nth-child(even) {
-    border-right: none;
-}
-
-.why-stat-box:nth-child(3),
-.why-stat-box:nth-child(4) {
-    border-bottom: none;
+    background: var(--bg-card);
 }
 
 .why-stat-num {
     font-family: var(--font-display);
-    font-size: 2.4rem;
+    font-size: clamp(3rem, 5vw, 4.5rem);
     font-weight: 300;
     color: var(--gold-bright);
     line-height: 1;
-    margin-bottom: 0.35rem;
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
 }
 
 .why-stat-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--text-secondary);
-    line-height: 1.4;
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+/* ─── Bottom Layout ─── */
+.why-bottom {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 6rem;
+}
+
+.why-bottom-left {
+    position: sticky;
+    top: 8rem;
+    align-self: start;
+}
+
+.why-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    font-weight: 300;
+    color: var(--text-hero);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-top: 1.5rem;
+}
+
+.why-headline em {
+    font-style: italic;
+    color: var(--gold);
+}
+
+/* ─── Reasons List ─── */
+.why-reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.why-item {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+}
+
+.why-item-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    color: var(--gold);
+    border: 1px solid var(--border-hover);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s var(--ease-out);
+}
+
+.why-item-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.why-item:hover .why-item-icon {
+    background: var(--gold);
+    color: var(--bg-deep);
+    transform: scale(1.05);
+}
+
+.why-item-content {
+    flex: 1;
+}
+
+.why-item-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
     font-weight: 400;
+    color: var(--text-hero);
+    margin-bottom: 1rem;
+    margin-top: 0.5rem;
+}
+
+.why-item-desc {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    font-weight: 300;
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .why {
+    .why-stats {
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 6rem;
+    }
+
+    .why-bottom {
         grid-template-columns: 1fr;
+        gap: 4rem;
     }
 
-    .why-left {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        padding: 5rem 2rem;
-    }
-
-    .why-right {
-        padding: 5rem 2rem;
+    .why-bottom-left {
+        position: relative;
+        top: 0;
     }
 }
 
 @media (max-width: 600px) {
-    .why-left {
-        padding: 4rem 1.25rem;
+    .why {
+        padding: 5rem 1.25rem;
     }
 
-    .why-right {
-        padding: 4rem 1.25rem;
+    .why-stats {
+        grid-template-columns: 1fr;
+        border-left: none;
+        border-right: none;
+        margin-bottom: 4rem;
+    }
+
+    .why-stat-box {
+        padding: 3rem 1.5rem;
     }
 
     .why-stat-num {
-        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .why-item {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .why-item-title {
+        margin-top: 0;
     }
 }
