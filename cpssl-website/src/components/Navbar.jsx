@@ -49,7 +49,7 @@ function Navbar() {
         <>
             <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
                 <a href="#" className="nav-logo" onClick={scrollTop} aria-label="CPSSL Home">
-                    <img src="/CPSSL.png" alt="CPSSL" className="nav-logo-img" />
+                    <img src="/CPSSLnew.png" alt="CPSSL" className="nav-logo-img" />
                 </a>
 
                 <ul className="nav-links">
