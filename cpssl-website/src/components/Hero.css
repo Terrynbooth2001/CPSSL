@@ -100,7 +100,7 @@
 
 @media (max-width: 600px) {
     .hero {
-        padding: 8rem 1.5rem 5rem;
+        padding: calc(8rem + env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(5rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
         align-items: center;
         justify-content: center;
         text-align: center;
