@@ -33,49 +33,15 @@
     position: relative;
 }
 
-.nav-logo-mark {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    border: 1.5px solid var(--gold-dim);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--gold-bright);
-    letter-spacing: 0.02em;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    background: rgba(200, 165, 90, 0.04);
+.nav-logo-img {
+    height: 54px;
+    width: auto;
+    object-fit: contain;
+    transition: height 0.3s var(--ease-smooth);
 }
 
-.nav-logo:hover .nav-logo-mark {
-    border-color: var(--gold);
-    box-shadow: 0 0 16px rgba(200, 165, 90, 0.15);
-}
-
-.nav-logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1;
-}
-
-.nav-logo-name {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    color: var(--text-hero);
-}
-
-.nav-logo-sub {
-    font-size: 0.46rem;
-    font-weight: 400;
-    letter-spacing: 0.25em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-top: 3px;
+.navbar.scrolled .nav-logo-img {
+    height: 42px;
 }
 
 /* Desktop links */
@@ -185,6 +151,16 @@
     align-items: center;
     justify-content: center;
     gap: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s var(--ease-smooth), visibility 0.4s;
+}
+
+.nav-overlay--open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .nav-overlay-link {
@@ -249,5 +225,13 @@
 
     .navbar.scrolled {
         padding: 0.8rem 1.25rem;
+    }
+
+    .nav-logo-img {
+        height: 42px;
+    }
+
+    .navbar.scrolled .nav-logo-img {
+        height: 34px;
     }
 }

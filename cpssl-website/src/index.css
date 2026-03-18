@@ -81,17 +81,16 @@ body {
   background: var(--gold);
 }
 
-/* ─── Grain overlay — GPU-composited ─── */
+/* ─── Grain overlay — Performance Optimized ─── */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  /* Using a performant CSS radial gradient instead of feTurbulence which is very CPU intensive */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 9000;
-  opacity: 0.5;
-  will-change: transform;
-  transform: translateZ(0);
+  opacity: 0.2;
 }
 
 /* ─── Base ─── */

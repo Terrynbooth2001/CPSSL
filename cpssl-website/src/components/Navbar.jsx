@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, memo } from 'react'
-import { m, AnimatePresence } from 'framer-motion'
 import './Navbar.css'
 
 const links = [
@@ -36,8 +35,10 @@ function Navbar() {
     const go = useCallback((e, href) => {
         e.preventDefault()
         setMobileOpen(false)
-        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-    }, [])
+        setTimeout(() => {
+            document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+        }, mobileOpen ? 250 : 0)
+    }, [mobileOpen])
 
     const scrollTop = useCallback((e) => {
         e.preventDefault()
@@ -47,12 +48,8 @@ function Navbar() {
     return (
         <>
             <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-                <a href="#" className="nav-logo" onClick={scrollTop}>
-                    <div className="nav-logo-mark">C</div>
-                    <div className="nav-logo-text">
-                        <span className="nav-logo-name">CPSSL</span>
-                        <span className="nav-logo-sub">Paraplanning & Support</span>
-                    </div>
+                <a href="#" className="nav-logo" onClick={scrollTop} aria-label="CPSSL Home">
+                    <img src="/CPSSL.png" alt="CPSSL" className="nav-logo-img" />
                 </a>
 
                 <ul className="nav-links">
@@ -66,46 +63,37 @@ function Navbar() {
                     </li>
                 </ul>
 
-                <button className={`nav-hamburger${mobileOpen ? ' open' : ''}`} onClick={() => setMobileOpen(v => !v)} aria-label="Toggle navigation menu">
+                <button
+                    className={`nav-hamburger${mobileOpen ? ' open' : ''}`}
+                    onClick={() => setMobileOpen(v => !v)}
+                    aria-label="Toggle navigation menu"
+                    aria-expanded={mobileOpen}
+                >
                     <span /><span /><span />
                 </button>
             </nav>
 
-            <AnimatePresence>
-                {mobileOpen && (
-                    <m.div
-                        className="nav-overlay"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+            <div className={`nav-overlay${mobileOpen ? ' nav-overlay--open' : ''}`} aria-hidden={!mobileOpen}>
+                {links.map((l) => (
+                    <a
+                        key={l.href}
+                        href={l.href}
+                        className="nav-overlay-link"
+                        onClick={(e) => go(e, l.href)}
+                        tabIndex={mobileOpen ? 0 : -1}
                     >
-                        {links.map((l, i) => (
-                            <m.a
-                                key={l.href}
-                                href={l.href}
-                                className="nav-overlay-link"
-                                onClick={(e) => go(e, l.href)}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.06 + i * 0.05, duration: 0.4, ease: [.16, 1, .3, 1] }}
-                            >
-                                {l.label}
-                            </m.a>
-                        ))}
-                        <m.a
-                            href="#contact"
-                            className="nav-overlay-cta"
-                            onClick={(e) => go(e, '#contact')}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.06 + links.length * 0.05, duration: 0.4, ease: [.16, 1, .3, 1] }}
-                        >
-                            Get in touch
-                        </m.a>
-                    </m.div>
-                )}
-            </AnimatePresence>
+                        {l.label}
+                    </a>
+                ))}
+                <a
+                    href="#contact"
+                    className="nav-overlay-cta"
+                    onClick={(e) => go(e, '#contact')}
+                    tabIndex={mobileOpen ? 0 : -1}
+                >
+                    Get in touch
+                </a>
+            </div>
         </>
     )
 }
