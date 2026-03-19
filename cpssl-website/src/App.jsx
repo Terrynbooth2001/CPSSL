@@ -11,6 +11,7 @@ const Services = lazy(() => import('./components/Services'))
 const About = lazy(() => import('./components/About'))
 const Process = lazy(() => import('./components/Process'))
 const WhyCPSSL = lazy(() => import('./components/WhyCPSSL'))
+const Testimonials = lazy(() => import('./components/Testimonials'))
 const Contact = lazy(() => import('./components/Contact'))
 const Footer = lazy(() => import('./components/Footer'))
 
@@ -25,6 +26,7 @@ function App() {
                 <About />
                 <Process />
                 <WhyCPSSL />
+                <Testimonials />
                 <Contact />
                 <Footer />
             </Suspense>

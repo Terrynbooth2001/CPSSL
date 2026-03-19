@@ -6,6 +6,7 @@ const links = [
     { label: 'About', href: '#about' },
     { label: 'Process', href: '#process' },
     { label: 'Why Us', href: '#why' },
+    { label: 'Testimonials', href: '#testimonials' },
 ]
 
 function Navbar() {

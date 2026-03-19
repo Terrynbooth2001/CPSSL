@@ -19,19 +19,9 @@ const services = [
         icon: <svg className="service-icon" viewBox="0 0 38 38" fill="none"><path d="M6 30L14 18L22 24L32 10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /><path d="M6 34h26" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>,
     },
     {
-        num: '04', name: 'Pension Transfer Reports',
-        desc: 'DB and QROPS transfer analysis and reports prepared with meticulous care. We meet the high compliance standards required in this critical advice area.',
-        icon: <svg className="service-icon" viewBox="0 0 38 38" fill="none"><path d="M19 7c-6.63 0-12 5.37-12 12s5.37 12 12 12 12-5.37 12-12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /><path d="M26 7l5 5-5 5M31 12H22" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" /></svg>,
-    },
-    {
-        num: '05', name: 'Investment Reviews',
+        num: '04', name: 'Investment Reviews',
         desc: 'Structured portfolio review reports, rebalancing analysis and performance summaries that keep client conversations informed and focused.',
         icon: <svg className="service-icon" viewBox="0 0 38 38" fill="none"><path d="M8 30V19M15 30V13M22 30V21M29 30V9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>,
-    },
-    {
-        num: '06', name: 'Back-Office Support',
-        desc: 'Administrative support including client onboarding, documentation management and general back-office tasks to keep your practice running smoothly.',
-        icon: <svg className="service-icon" viewBox="0 0 38 38" fill="none"><rect x="5" y="10" width="28" height="18" rx="2" stroke="currentColor" strokeWidth="1.2" /><path d="M5 15h28" stroke="currentColor" strokeWidth="1.2" /><path d="M12 24h4M20 24h6" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" /></svg>,
     },
 ]
 

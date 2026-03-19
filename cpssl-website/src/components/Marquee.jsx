@@ -3,8 +3,7 @@ import './Marquee.css'
 
 const items = [
     'Suitability Reports', 'Research & Analysis', 'Cash Flow Modelling',
-    'Pension Transfers', 'Investment Reviews', 'Back-Office Support',
-    'FCA Compliance', 'Client Onboarding', 'Documentation',
+    'Investment Reviews', 'FCA Compliance', 'Client Onboarding', 'Documentation',
 ]
 
 function Marquee() {
